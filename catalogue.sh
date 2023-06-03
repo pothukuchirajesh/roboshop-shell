@@ -1,23 +1,27 @@
-curl -sL https://rpm.nodesource.com/setup_lts.x | bash
-yum install nodejs -y
+curl -sL https://rpm.nodesource.com/setup_lts.x | bash  &>>/tmp/roboshop.log
 
-useradd roboshop
+yum install nodejs -y  &>>/tmp/roboshop.log
 
-rm -rf/app
-mkdir /app
+useradd roboshop  &>>/tmp/roboshop.log
+rm -rf /app  &>>/tmp/roboshop.log
 
-curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue.zip
+mkdir /app  &>>/tmp/roboshop.log
 
+curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue.zip  &>>/tmp/roboshop.log
 cd /app
-unzip /tmp/catalogue.zip
+
+unzip /tmp/catalogue.zip  &>>/tmp/roboshop.log
 cd /app
-npm install
-cp catalogue.service  /etc/systemd/system/catalogue.service
 
-systemctl daemon-reload
-systemctl enable catalogue
-systemctl start catalogue
+npm install  &>>/tmp/roboshop.log
+cp /home/centos/roboshop-shell/catalogue.service /etc/systemd/system/catalogue.service  &>>/tmp/roboshop.log
 
-cp mongodb.repo /etc/yum.repos.d/mongo.repo
-yum install mongodb-org-shell -y
-mongo --host mongodb-dev.devops73.site </app/schema/catalogue.js
+systemctl daemon-reload  &>>/tmp/roboshop.log
+systemctl enable catalogue  &>>/tmp/roboshop.log
+systemctl start catalogue  &>>/tmp/roboshop.log
+
+cp /home/centos/roboshop-shell/mongodb.repo /etc/yum.repos.d/mongo.repo  &>>/tmp/roboshop.log
+
+yum install mongodb-org-shell -y  &>>/tmp/roboshop.log
+
+mongo --host mongodb-dev.devops73.site </app/schema/catalogue.js  &>>/tmp/roboshop.log
